@@ -9,5 +9,8 @@ public class AddrEx_01 {
 		AddrServiceV1 ad = new AddrServiceV1();
 		ad.viewAll();
 		ad.searchAddressById();
+		ad.insertData();
+		ad.updateData();
+		ad.deleteData();
 	}
 }
