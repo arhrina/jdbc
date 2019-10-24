@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 링크 문서에 tag들에 대한 해석이 있다. 문서 정의 헤더 -->
+
+<mapper namespace="com.biz.mybatis.mapper.BookDao"> <!-- namespace에 실제 있는 인터페이스 Dao를 지정 -->
+	<select id="selectAll"
+		resultType="bDTO"> <!-- resultType(return형 type)이 List면 알아서 리턴해준다 -->
+		SELECT
+			B_CODE,
+			B_NAME,
+			B_COMP,
+			B_WRITER,
+			B_PRICE
+		FROM tbl_books
+	</select>
+
+	<select id="findById"
+		resultType="bDTO">
+		SELECT
+			B_CODE,
+			B_NAME,
+			B_COMP,
+			B_WRITER,
+			B_PRICE
+		FROM tbl_books
+		WHERE B_CODE = #{b_code}
+	</select>
+	
+	<select id="findByName"
+		resultType="bDTO">
+		SELECT
+			B_CODE,
+			B_NAME,
+			B_COMP,
+			B_WRITER,
+			B_PRICE
+		FROM tbl_books
+		WHERE B_NAME LIKE '%' || #{b_name} || '%' <!-- LIKE 검색. oracle DB의 문법을 따른다 -->
+	</select>
+
+	<insert id="insert" parameterType="bDTO">
+		INSERT INTO tbl_books(B_CODE, B_NAME, B_COMP, B_WRITER, B_PRICE)
+		VALUES('B' || LPAD(SEQ_BOOKS.nextval, 4, 0), #{b_name}, #{b_comp}, #{b_writer}, #{b_price})
+	</insert>
+	
+	<update id="update" parameterType="bDTO">
+		UPDATE tbl_books SET B_NAME = #{b_name},
+		 B_COMP = #{b_comp},
+		  B_WRITER = #{b_writer},
+		   B_PRICE = #{b_price}
+		    WHERE B_CODE = #{b_code}
+	</update>
+	
+	<delete id="delete"> <!-- 기본변수형들은 parameterType은 dao에 있는 argument type. 입력하지 않아도 된다. 3 이전버전에선 사용 필요 -->
+		DELETE FROM tbl_books
+		WHERE B_CODE = #{b_code}
+	</delete>
+</mapper>
