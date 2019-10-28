@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+<!-- BTO나 VO클래스의 별명을 설정. 선택사항 -->
+	<typeAliases>
+		<typeAlias alias="dDTO" type="com.biz.iolist.persistence.DeptDTO"/>
+		<typeAlias alias="iDTO" type="com.biz.iolist.persistence.IolistDTO"/>
+		<typeAlias alias="pDTO" type="com.biz.iolist.persistence.ProductDTO"/>
+		<typeAlias alias="iVO" type="com.biz.iolist.persistence.IolistVO"/>
+	</typeAliases>
+<!--
+environments
+myabtis에서 jdbc를 사용한 connection들을 생성하고 관리할 수 있도록 기본 설정값을 지정하는 곳
+-->
+	<environments default="Connection">
+	<!--
+	environment는 여러개 지정할 수 있고 필요에 따라
+	id를 선택해서 default에 입력해서 사용 가능 
+	DB에 연결하기 위한 기본 정보들을 담는다. id는 여러개를 만들 수 있고 default는 기본형
+	-->
+		<environment id="Connection">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.OracleDriver" />
+				<property name="url"
+					value="jdbc:oracle:thin:@localhost:1521:xe" />
+				<property name="username" value="iolist2" />
+				<property name="password" value="iolist2" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+	<!-- SQL을 보낼 정보는 mapper에 담겨있다. 테이블이 여러개라면 여러개의 mapper를 사용 
+	 -->
+		<mapper resource="com/biz/iolist/mapper/iolist-mapper.xml"/>
+		<mapper resource="com/biz/iolist/mapper/pro-mapper.xml"/>
+		<mapper resource="com/biz/iolist/mapper/dpt-mapper.xml"/>
+		<mapper resource="com/biz/iolist/mapper/iolist-view-mapper.xml"/>
+	</mappers>
+
+</configuration>
