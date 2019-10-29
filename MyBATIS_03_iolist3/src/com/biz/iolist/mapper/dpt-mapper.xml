@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.iolist.dao.DeptDao"> <!-- mapper namespace에 DAO 클래스 위치지정 -->
+	<select id="selectAll" resultType="dDTO"> <!-- id에 dao에 있는 메소드들 이름 -->
+	<!-- 내용에, 들어갈 SQL Query문 -->
+	SELECT 
+		D_CODE,
+		D_NAME,
+		D_CEO,
+		D_TEL,
+		D_ADDR
+	FROM tbl_dept
+	</select>
+	
+	<select id="findById" resultType="dDTO">
+	SELECT 
+		D_CODE,
+		D_NAME,
+		D_CEO,
+		D_TEL,
+		D_ADDR
+	FROM tbl_dept
+	WHERE D_CODE = #{d_code}
+	</select>
+	
+	<select id="findByName" resultType="dDTO">
+	SELECT 
+		D_CODE,
+		D_NAME,
+		D_CEO,
+		D_TEL,
+		D_ADDR
+	FROM tbl_dept
+	WHERE D_NAME LIKE '%' || #{d_name} || '%'
+	</select>
+	
+	<select id="findByNameAndCEO" resultType="dDTO">
+	SELECT 
+		D_CODE,
+		D_NAME,
+		D_CEO,
+		D_TEL,
+		D_ADDR
+	FROM tbl_dept
+	WHERE D_NAME LIKE '%' || #{d_name} || '%'
+	 AND D_CEO LIKE '%' || #{d_ceo} || '%'
+	</select>
+	
+	<select id="findByDNameAndCEO" resultType="dDTO">
+	SELECT 
+		D_CODE,
+		D_NAME,
+		D_CEO,
+		D_TEL,
+		D_ADDR
+	FROM tbl_dept
+	WHERE D_NAME = #{d_name}
+	 AND D_CEO = #{d_ceo}
+	</select>
+	
+	<select id="getMaxDCode" resultType="String">
+	SELECT MAX(d_code) FROM tbl_dept
+	</select>
+	
+	<insert id="insert" parameterType="dDTO">
+		INSERT INTO tbl_dept(
+		D_CODE,
+		D_NAME,
+		D_CEO,
+		D_TEL,
+		D_ADDR
+		)
+		VALUES(
+		#{d_code, jdbcType=VARCHAR},
+		#{d_name, jdbcType=VARCHAR},
+		#{d_ceo, jdbcType=VARCHAR},
+		#{d_tel, jdbcType=VARCHAR},
+		#{d_addr, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="update" parameterType="dDTO">
+	UPDATE tbl_dept
+		SET
+		D_NAME = #{d_name, jdbcType=VARCHAR},
+		D_CEO = #{d_ceo, jdbcType=VARCHAR},
+		D_TEL = #{d_tel, jdbcType=VARCHAR},
+		D_ADDR = #{d_addr, jdbcType=VARCHAR}
+		<!-- 값이 비어있다면 update시 java null값이 db로 넘어가면서
+		exception 발생. jdbc의 null로 바꿔라. not null로 설정된 컬럼이라면 추가해주지 않아도 된다 -->
+	WHERE D_CODE = #{d_code} 
+	</update>
+	
+	<delete id="delete" parameterType="dDTO">
+	DELETE FROM tbl_dept
+	WHERE D_CODE = #{d_code}
+	</delete>
+</mapper>
