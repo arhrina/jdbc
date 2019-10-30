@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.iolist.dao.IolistDao"> <!-- mapper namespace에 DAO 클래스 위치지정 -->
+	<select id="getMaxCode" resultType="String">
+	SELECT MAX(io_seq) FROM tbl_iolist
+	</select>
+	<select id="selectAll" resultType="iDTO"> <!-- id에 dao에 있는 메소드들 이름 -->
+	<!-- 내용에, 들어갈 SQL Query문 -->
+	</select>
+	
+	<select id="findById" resultType="iDTO">
+	</select>
+	
+	<insert id="insert" parameterType="iDTO">
+	INSERT INTO tbl_iolist(
+		IO_SEQ,
+		IO_DATE,
+		IO_INOUT,
+		IO_QTY,
+		IO_PRICE,
+		IO_TOTAL,
+		IO_PCODE,
+		IO_DCODE
+	)
+	VALUES(
+		#{io_seq},
+		#{io_date},
+		#{io_inout},
+		#{io_qty},
+		#{io_price},
+		#{io_total},
+		#{io_pcode},
+		#{io_dcode}
+	)
+	</insert>
+	
+	<update id="update" parameterType="iDTO">
+	</update>
+	
+	<delete id="delete" parameterType="iDTO">
+	</delete>
+</mapper>
