@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.callor.memo.dao.MemoDao"> <!-- mapper namespace에 DAO 클래스 위치지정 -->
+	<select id="viewAllList" resultType="mDTO"> <!-- id에 dao에 있는 메소드들 이름 -->
+	<!-- 내용에, 들어갈 SQL Query문 -->
+	SELECT *
+	FROM tbl_memo
+	</select>
+	
+	<select id="searchBySEQ" resultType="mDTO">
+	SELECT 
+		M_SEQ,
+		M_AUTH,
+		M_DATE,
+		M_SUBJECT,
+		M_TEXT,
+		M_PHOTO
+	FROM tbl_memo
+	WHERE M_SEQ = #{intSeq}
+	</select>
+	
+	<select id="searchBySub" resultType="mDTO">
+	SELECT 
+		M_SEQ,
+		M_AUTH,
+		M_DATE,
+		M_SUBJECT,
+		M_TEXT,
+		M_PHOTO
+	FROM tbl_memo
+	WHERE M_SUBJECT LIKE '%' || #{str} || '%'
+	</select>
+	
+	<select id="searchByWri" resultType="mDTO">
+	SELECT 
+		M_SEQ,
+		M_AUTH,
+		M_DATE,
+		M_SUBJECT,
+		M_TEXT,
+		M_PHOTO
+	FROM tbl_memo
+	WHERE M_AUTH LIKE '%' || #{str} || '%'
+	</select>
+	
+	<select id="searchByNum" resultType="mDTO">
+	SELECT 
+		M_SEQ,
+		M_AUTH,
+		M_DATE,
+		M_SUBJECT,
+		M_TEXT,
+		M_PHOTO
+	FROM tbl_memo
+	WHERE M_SEQ = #{intSeq}
+	</select>
+	
+	<select id="viewAllSEQ" resultType="mDTO">
+	SELECT
+		M_SEQ
+	FROM tbl_memo
+	</select>
+	
+	<select id="viewAllSub" resultType="mDTO">
+	SELECT
+		M_SUBJECT
+	FROM tbl_memo
+	</select>
+	
+	<select id="viewAllWri" resultType="mDTO">
+	SELECT
+		M_AUTH
+	FROM tbl_memo
+	</select>
+	
+	<insert id="insert" parameterType="mDTO">
+		INSERT INTO tbl_memo(
+			M_SEQ,
+			M_AUTH,
+			M_DATE,
+			M_SUBJECT,
+			M_TEXT,
+			M_PHOTO
+		)
+		VALUES(
+			MEMO_SEQ.NEXTVAL,
+			#{m_auth},
+			#{m_date},
+			#{m_subject},
+			#{m_text, jdbcType=VARCHAR},
+			#{m_photo, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="update" parameterType="mDTO">
+	UPDATE tbl_dept
+		SET
+			M_AUTH = #{m_auth},
+			M_DATE = #{m_date},
+			M_SUBJECT = #{m_subject, jdbcType=VARCHAR},
+			M_TEXT = #{m_text, jdbcType=VARCHAR},
+			M_PHOTO = #{m_photo, jdbcType=VARCHAR}
+		<!-- 값이 비어있다면 update시 java null값이 db로 넘어가면서
+		exception 발생. jdbc의 null로 바꿔라. not null로 설정된 컬럼이라면 추가해주지 않아도 된다 -->
+	WHERE M_SEQ = #{m_seq} 
+	</update>
+	
+	<delete id="delete" parameterType="mDTO">
+	DELETE FROM tbl_memo
+	WHERE M_SEQ = #{m_seq}
+	</delete>
+</mapper>
