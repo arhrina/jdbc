@@ -28,7 +28,8 @@ public class RentServiceV1 {
 		uDao = DBConnection.getSqlSessionFactory().openSession(true).getMapper(UserDao.class);
 		s = new BufferedReader(new InputStreamReader(System.in));
 	}
-
+	
+	
 	public void menu() throws IOException {
 
 		System.out.println("책방 서비스 v1");

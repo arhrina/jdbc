@@ -28,6 +28,7 @@
 	SELECT *
 	FROM tbl_rent_book
 	WHERE RENT_BCODE = #{bCode}
+	AND rent_retur_yn IS NULL
 	</select>
 	
 	<insert id="insert" parameterType="rDTO">
